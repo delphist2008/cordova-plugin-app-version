@@ -19,33 +19,28 @@ function loadConfigXMLDoc(filePath) {
     }
 }
 
-
-var getPreferenceValue = function (config, name) {
-    var value = config.match(new RegExp('name="' + name + '" value="(.*?)"', "i"));
-    if (value && value[1]) {
-        return value[1]
-    } else {
-        return null
-    }
-};
-
 var configXMLPath = "config.xml";
 var rawJSON = loadConfigXMLDoc(configXMLPath);
 var version = rawJSON.widget.$.version;
-var id = rawJSON.widget.$.id;
+var package_name = rawJSON.widget.$.id;
 var displayName = rawJSON.widget.name[0];
 var [MAJOR, MINOR, PATCH] = version.split(".");
 var versionCode = PATCH + MINOR * 100 + MAJOR * 10000
 
-console.log([version, displayName, id, versionCode].join("|"));
-// var files = [
-//     "platforms/browser/www/plugins/cordova-plugin-googleplus/src/browser/GooglePlusProxy.js",
-//     "platforms/browser/platform_www/plugins/cordova-plugin-googleplus/src/browser/GooglePlusProxy.js"
-// ];
+var files = [
+    "platforms/browser/www/plugins/cordova-plugin-app-version/src/browser/AppVersionProxy.js",
+    "platforms/browser/platform_www/plugins/cordova-plugin-app-version/src/browser/AppVersionProxy.js"
+];
 
-// for (var i = 0; i < files.length; i++) {
-//     try {
-//         var contents = fs.readFileSync(files[i]).toString();
-//         fs.writeFileSync(files[i], contents.replace(/CLIENT_ID/g, '"' + CLIENT_ID + '"'));
-//     } catch (err) { }
-// }
+for (var i = 0; i < files.length; i++) {
+    try {
+        var contents = fs.readFileSync(files[i]).toString();
+        var replaced = contents
+            .replace(/\$VERSION\$/g, version)
+            .replace(/\$NAME\$/g, displayName)
+            .replace(/\$PACKAGE_NAME\$/g, package_name)
+            .replace(/\$VERSION_CODE\$/g, versionCode);
+
+        fs.writeFileSync(files[i], replaced);
+    } catch (err) { }
+}
