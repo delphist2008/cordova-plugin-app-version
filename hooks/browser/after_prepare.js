@@ -35,11 +35,12 @@ var files = [
 for (var i = 0; i < files.length; i++) {
     try {
         var contents = fs.readFileSync(files[i]).toString();
+
         var replaced = contents
-            .replace(/\$VERSION\$/g, version)
-            .replace(/\$NAME\$/g, displayName)
-            .replace(/\$PACKAGE_NAME\$/g, package_name)
-            .replace(/\$VERSION_CODE\$/g, versionCode);
+            .replace(/(\$VERSION\$ =)(.*)/g, "$1 '" + version + "';")
+            .replace(/(\$NAME\$ =)(.*)/g, "$1 '" + displayName + "';")
+            .replace(/(\$PACKAGE_NAME\$ =)(.*)/g, "$1 '" + package_name + "';")
+            .replace(/(\$VERSION_CODE\$ =)(.*)/g, "$1 '" + versionCode + "';");
 
         fs.writeFileSync(files[i], replaced);
     } catch (err) { }

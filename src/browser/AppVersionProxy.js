@@ -1,15 +1,21 @@
-AppVersionProxy = {
+cordova.define("cordova-plugin-app-version.AppVersionProxy", function(require, exports, module) { AppVersionProxy = {
   getVersionNumber: function (successCallback, failCallback, args) {
-    successCallback("$VERSION$");
+	var $VERSION$ = placeholder;
+    successCallback($VERSION$);
   },
   getAppName: function (successCallback, failCallback, args) {
-    successCallback("$NAME$");
+	var $NAME$ = placeholder;
+    successCallback($NAME$);
   },
   getPackageName: function (successCallback, failCallback, args) {
-    successCallback("$PACKAGE_NAME$");
+	var $PACKAGE_NAME$ = placeholder;
+    successCallback($PACKAGE_NAME$);
   },
   getVersionCode: function (successCallback, failCallback, args) {
-    successCallback("$VERSION_CODE$");
+	var $VERSION_CODE$ = placeholder;
+    successCallback($VERSION_CODE$);
   }
 };
 cordova.commandProxy.add("AppVersion", AppVersionProxy);
+
+});
