@@ -62,10 +62,10 @@
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/whiteoctober/cordova-plugin-app-version.git"
+    "url": "git+https://github.com/delphist2008/cordova-plugin-app-version.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.1.9"
+  "version": "0.1.10"
 }
